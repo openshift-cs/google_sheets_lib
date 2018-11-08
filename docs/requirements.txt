@@ -1,0 +1,4 @@
+oauth2client
+pygsheets
+Sphinx
+sphinx-rtd-theme
