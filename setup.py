@@ -47,7 +47,7 @@ setup(
     packages=find_packages(exclude=('tests',)),
     install_requires=[
         'oauth2client',
-        'pygsheets @ https://github.com/nithinmurali/pygsheets/tarball/staging#egg=pygsheets-1.1.4'
+        'pygsheets>=2'
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest', 'pytest-dependency', 'pytest-flake8'],
