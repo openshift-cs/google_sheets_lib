@@ -36,7 +36,10 @@ class GoogleSheets:
         Returns:
             A list of Google Spreadsheet titles
         """
-        return self.client.spreadsheet_titles(query=f'"{self.folder}" in parents')
+        if self.folder:
+            return self.client.spreadsheet_titles(query=f'"{self.folder}" in parents')
+        else:
+            return self.client.spreadsheet_titles()
 
     def create_sheet(self, title: str) -> 'GoogleSheets':
         """Creates and activates a Google Spreadsheet within `drive_folder_id`
