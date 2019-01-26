@@ -312,6 +312,8 @@ class GoogleSheets:
             raise(TypeError(f'You must activate a worksheet before updating row values'))
 
         try:
+            if not isinstance(values[0], list):
+                values = [values]
             self.ws.update_values(crange=(row_offset, column_offset), values=values, extend=True, majordim='ROWS')
             return True
         except Exception:
@@ -337,6 +339,8 @@ class GoogleSheets:
             raise(TypeError(f'You must activate a worksheet before updating column values'))
 
         try:
+            if not isinstance(values[0], list):
+                values = [values]
             self.ws.update_values(crange=(row_offset, column_offset), values=values, extend=True, majordim='COLUMNS')
             return True
         except Exception:
