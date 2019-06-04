@@ -10,7 +10,7 @@ class GoogleSheets:
     ws: 'pygsheets.Worksheet' = None
     ws_range_format: Pattern = re.compile(r'(?P<worksheet>[a-zA-Z0-9_]+)!(?P<start_range>[A-Z0-9]+):(?P<end_range>[A-Z0-9]+)')
 
-    def __init__(self, drive_folder_id=None, logging_level: str='INFO') -> None:
+    def __init__(self, drive_folder_id=None, logging_level: str='INFO', service_account_file: str=None) -> None:
         """Google Sheets class initializer"""
         # Disable sub-logging from the `googleapiclient` discovery.py
         getLogger('googleapiclient.discovery').setLevel('WARNING')
@@ -21,10 +21,14 @@ class GoogleSheets:
         stdout_handler.setFormatter(formatter)
         self.log.addHandler(stdout_handler)
         self.folder = drive_folder_id
-        self.client = pygsheets.authorize(credentials_directory=None, scopes=[
+        scopes = [
             'https://www.googleapis.com/auth/spreadsheets',
             'https://www.googleapis.com/auth/drive'
-        ])
+        ]
+        if service_account_file:
+            self.client = pygsheets.authorize(service_account_file=service_account_file, scopes=scopes)
+        else:
+            self.client = pygsheets.authorize(credentials_directory=None, scopes=scopes)
 
     @staticmethod
     def format_addr(addr):
